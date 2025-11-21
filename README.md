@@ -3,8 +3,8 @@
 Este proyecto implementa una simulación de gestión de vehículos autónomos utilizando el lenguaje de programación Go. El diseño se centra en la Programación Orientada a Objetos (POO) aplicando interfaces, polimorfismo y composición.
 
 ## 📋 Integrantes del Grupo
-* [Nombre del Integrante 1]
-* [Nombre del Integrante 2]
+* Gabriel Minda
+* Diego Ruiz
 
 ## 🚀 Cómo ejecutar la simulación
 
