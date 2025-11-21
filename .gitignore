@@ -1,0 +1,13 @@
+# Binarios y ejecutables
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Carpeta de configuraciones de VS Code (opcional)
+.vscode/
+
+
