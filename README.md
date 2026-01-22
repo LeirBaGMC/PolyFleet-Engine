@@ -1,77 +1,71 @@
-# Sistema de Transporte Autónomo - NeoQuito
+#  NeoQuito: Autonomous Fleet Simulation
+> **Golang OOP Showcase** | Interface-Based Polymorphism | Composition over Inheritance
 
-Este proyecto implementa una simulación de gestión de vehículos autónomos utilizando el lenguaje de programación Go. El diseño se centra en la Programación Orientada a Objetos (POO) aplicando interfaces, polimorfismo y composición.
+![Go](https://img.shields.io/badge/Language-Go_1.25+-00ADD8?logo=go&logoColor=white)
+![Architecture](https://img.shields.io/badge/Pattern-Composition_&_Interfaces-purple)
+![Status](https://img.shields.io/badge/Status-Educational_Prototype-success)
 
-## 📋 Integrantes del Grupo
-* Gabriel Minda
-* Diego Ruiz
+##  Overview
+**NeoQuito** is a backend simulation engine designed to manage a heterogeneous fleet of autonomous vehicles (Buses and Drones). Unlike traditional OOP languages, this project leverages Go's type system to demonstrate **composition (struct embedding)** and **interface-based polymorphism** to orchestrate complex behaviors without class inheritance.
 
-## 🚀 Cómo ejecutar la simulación
+## Technical Architecture
 
-1. Asegúrate de tener instalado Go (versión 1.25 o superior).
-2. Ubícate en la carpeta raíz del proyecto (donde está el archivo `go.mod`).
-3. Ejecuta el siguiente comando en la terminal:
+The system is modularized within the `transport` package, enforcing strict separation of concerns:
 
-```bash
-go run .
+### 1. Core Interfaces
+The system relies on the `AutonomousVehicle` interface to decouple implementation from execution.
+```go
+type AutonomousVehicle interface {
+    Start()
+    Stop()
+    AssignMission(mission string)
+    ReportStatus() string
+}
+```
+### 2. Composition & Embedding
+Instead of inheritance trees, shared behaviors are injected via struct embedding, adhering to the "Has-a" vs "Is-a" principle:
 
-O alternativamente:
+* **GPS Unit:** Manages coordinate tracking (`Location`).
+* **Battery System:** Handles energy consumption logic (`ConsumeEnergy`).
+* **Mission Data:** State management for active tasks.
 
-
-go run main.go
-
-🛠️ Diseño del Sistema
-El sistema está modularizado dentro del paquete transport y se estructura de la siguiente manera:
-
-Interfaces Usadas
-AutonomousVehicle: Es la interfaz principal que define el comportamiento obligatorio para cualquier vehículo en el sistema.
-
-Start(): Inicia el vehículo y consume energía.
-
-Stop(): Detiene el vehículo.
-
-AssignMission(mission string): Asigna una tarea específica.
-
-ReportStatus() string: Devuelve el estado actual del vehículo.
-
-Tipos Implementados (Structs)
-Se han implementado dos tipos de vehículos concretos:
-
-AutonomousBus: Simula un autobús de transporte público.
-
-DeliveryDrone: Simula un dron de entrega de paquetes.
-
-Composición (Modularidad)
-Para evitar la repetición de código, se utilizaron structs reutilizables mediante composición (embedding):
-
-GPS: Gestiona la ubicación actual (Location).
-
-Battery: Gestiona el nivel de energía y el consumo (ConsumeEnergy).
-
-MissionData: Gestiona la descripción de la misión actual.
-
-Control Center
-El ControlCenter actúa como el orquestador del sistema:
-
-Utiliza un slice de interfaces AutonomousVehicle para almacenar diferentes tipos de vehículos.
-
-Ejecuta acciones (start, stop) de manera polimórfica sin conocer el tipo exacto del vehículo.
-
-Genera reportes consolidados del estado de toda la flota.
-
+### 3. Polymorphic Control Center
+The `ControlCenter` acts as the fleet orchestrator. It manages a slice of `[]AutonomousVehicle`, allowing it to batch-process commands (Start/Stop/Report) across different vehicle types (Bus vs. Drone) unaware of their underlying concrete implementation.
 
 ---
 
-### 3. Estructura Final de Archivos
-Solo para confirmar, tu carpeta debe verse así antes de entregar:
+##  Quick Start
 
-```text
-TALLER_MINDA_RUIZ/
-│
-├── go.mod               <-- Define el módulo "mi-sistema"
-├── main.go              <-- Tu simulación principal
-├── README.md            <-- El archivo que te acabo de dar
-│
-└── transport/           <-- Carpeta del paquete
-    ├── vehicle.go       <-- Interfaces, Structs (Bus, Drone, GPS, Battery)
-    └── control.go       <-- Struct ControlCenter y sus métodos
+### Prerequisites
+* Go 1.21 or higher
+
+### Execution
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/LeirBaGMC/NeoQuito-Autonomous-Fleet.git](https://github.com/LeirBaGMC/NeoQuito-Autonomous-Fleet.git)
+   cd NeoQuito-Autonomous-Fleet
+
+2. **Run the simulation:**
+   ```bash
+   go run main.go
+
+NeoQuito-Autonomous-Fleet/
+├── go.mod                  # Module definition
+├── main.go                 # Simulation entry point
+├── README.md               # Documentation
+└── transport/              # Core Logic Package
+    ├── vehicle.go          # Structs (Bus, Drone) & Embeds
+    └── control.go          # ControlCenter Logic
+
+## Key Learning Outcomes
+This project demonstrates proficiency in:
+
+Go Interfaces: Defining behavior contracts.
+
+Struct Embedding: Reusing logic without inheritance.
+
+Slice Management: Handling dynamic collections of interfaces.
+
+Package Visibility: Managing exported/unexported identifiers in Go.
+
+Developed by Gabriel Minda & Diego Ruiz as a Software Architecture POC.
